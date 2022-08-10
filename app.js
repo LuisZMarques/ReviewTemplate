@@ -43,15 +43,52 @@ const author = document.getElementById("author");
 const job = document.getElementById("job");
 const info = document.getElementById("info");
 
-const btnPrev = document.querySelector(".prev-btn");
+/* const btnPrev = document.querySelector(".prev-btn");
 const btnNext = document.querySelector(".next-btn");
-const btnRandom = document.querySelector(".random-btn");
+const btnRandom = document.querySelector(".random-btn"); */
 
-//const btns = document.querySelectorAll(".btn")
+const btns = document.querySelectorAll(".prev-btn, .next-btn, .random-btn");
 
 let currentItem = 0;
 
-window.addEventListener("DOMContentLoaded", function(){
+btns.forEach(function(buttons){
+  buttons.addEventListener("click", function(btn){
+    const selectedBtn = btn.currentTarget.classList.value;
+    if(selectedBtn === "prev-btn"){
+      currentItem--;
+      showPerson();
+    }else if(selectedBtn === "next-btn"){
+      currentItem++;
+      showPerson();
+    }else if(selectedBtn === "random-btn"){
+      currentItem = Math.floor(Math.random()*(reviews.length - 1));
+      showPerson();
+    }else{
+      window.alert("This action is not possible")
+    }
+  })
+})
+
+function verifyNumber(){
+  if(currentItem < 0){
+    currentItem = reviews.length - 1;
+  }else if(currentItem > reviews.length - 1){
+    currentItem = 0;
+  }else{
+    console.log("currentItem is between 0-3!")
+  }
+}
+function showPerson(){
+  verifyNumber();
+  const item = reviews[currentItem];
+  image.src = item.img;
+  author.textContent = item.author;
+  job.textContent = item.job;
+  info.textContent = item.text;
+  console.log(currentItem)
+}
+
+/* window.addEventListener("DOMContentLoaded", function(){
   showPerson();
 })
 
@@ -81,3 +118,4 @@ btnRandom.addEventListener("click",function(){
   currentItem = Math.floor(Math.random()*(reviews.length - 1));
   showPerson();
 })
+ */
